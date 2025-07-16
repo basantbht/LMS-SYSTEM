@@ -23,7 +23,8 @@ const Login = () => {
   const [loginInput, setLoginInput] = useState({ email: "", password: "" });
 
   const changeInputHandler = (e, type) => {
-    const { name, value } = e.target;
+      const { name, value } = e.target;
+      console.log(name,value);
     if (type === "signup") {
       setSignupInput({ ...signupInput, [name]: value });
     } else {
