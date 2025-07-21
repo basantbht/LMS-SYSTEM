@@ -1,3 +1,4 @@
+P671pY5W9a6tJV9y
 import { AppWindowIcon, CodeIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -105,7 +106,7 @@ const Login = () => {
                   <Input
                     type="email"
                     name="email"
-                    value={signupInput.email}
+                    value={loginInput.email}
                     onChange={(e) => changeInputHandler(e,"login")}
                     placeholder="Eg. test@gmail.com"
                     required="true"
@@ -117,7 +118,7 @@ const Login = () => {
                   <Input
                     type="password"
                     name="password"
-                    value={signupInput.password}
+                    value={loginInput.password}
                     onChange={(e) => changeInputHandler(e,"login")}
                     placeholder="Eg. xyz"
                     required="true"
