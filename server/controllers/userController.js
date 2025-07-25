@@ -1,5 +1,6 @@
 import userModel from "../models/userModel.js";
 import bcrypt from "bcryptjs";
+import { generateToken } from "../utils/generateToken.js";
 
 export const register = async (req,res) => {
     try {
@@ -46,9 +47,9 @@ export const register = async (req,res) => {
 export const login = async (req,res) => {
     try {
 
-        const {name, email} = req.body;
+        const {email, password} = req.body;
 
-        if(!name || !email){
+        if(!email || !password){
             return res.status(400).json({
                 success: false,
                 message: "All fields are required"
