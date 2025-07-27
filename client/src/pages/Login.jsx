@@ -76,7 +76,7 @@ const Login = () => {
     }
 
     if(registerError){
-      toast.error(registerData.data.message || "Signup failed");
+      toast.error(registerError.data.message || "Signup failed");
     }
 
     if(loginIsSuccess && loginData){
@@ -85,7 +85,7 @@ const Login = () => {
     }
     
     if(loginError){
-      toast.error(loginData.data.message || "Login failed");
+      toast.error(loginError.data.message || "Login failed");
     }
   }, [
     loginIsLoading,
@@ -99,7 +99,7 @@ const Login = () => {
   return (
     <div className="flex items-center w-full justify-center mt-20">
       <div className="flex w-full max-w-sm flex-col gap-6">
-        <Tabs defaultValue="signup">
+        <Tabs defaultValue="login">
           <TabsList>
             <TabsTrigger value="signup">Signup</TabsTrigger>
             <TabsTrigger value="login">Login</TabsTrigger>
