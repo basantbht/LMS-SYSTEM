@@ -1,5 +1,5 @@
 import courseModel from "../models/courseModel.js";
-import { lectureModel } from "../models/lectureModel.js";
+import lectureModel from "../models/lectureModel.js";
 import { deleteMediaFromCloudinary, deleteVideoFromCloudinary, uploadMedia } from "../utils/cloudinary.js";
 
 export const createCourse = async (req, res) => {
@@ -29,6 +29,26 @@ export const createCourse = async (req, res) => {
 
         return res.status(500).json({
             message: "Failed to create course"
+        });
+    }
+}
+
+export const getPublishedCourse = async (req, res) => {
+    try {
+        const courses = await courseModel.find({ isPublished: true }).populate({path: "creator", select: "name photoUrl"});
+        if (!courses) {
+            return res.status(404).json({
+                message: "Course not found"
+            });
+        }
+         return res.status(200).json({
+            courses
+        });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            message: "Failed to get published courses"
         });
     }
 }
@@ -195,9 +215,9 @@ export const editLecture = async (req, res) => {
         // Update lecture
         if (lectureTitle) lecture.lectureTitle = lectureTitle;
 
-        if (videoInfo.videoUrl) lecture.videoUrl = videoInfo.videoUrl;
+        if (videoInfo?.videoUrl) lecture.videoUrl = videoInfo.videoUrl;
 
-        if (videoInfo.publicId) lecture.publicId = videoInfo.publicId;
+        if (videoInfo?.publicId) lecture.publicId = videoInfo.publicId;
 
         if (isPreviewFree) lecture.isPreviewFree = isPreviewFree;
 
@@ -276,6 +296,38 @@ export const getLectureById = async (req, res) => {
         console.log(error);
         return res.status(500).json({
             message: "Failed to get lecture"
+        });
+    }
+}
+
+
+// Publish unpublish course logic
+
+export const togglePublishCourse = async (req, res) => {
+    try {
+        const { courseId } = req.params;
+        const { publish } = req.query; // true or false
+        const course = await courseModel.findById(courseId);
+        if (!course) {
+            return res.status(404).json({
+                message: "Course not found."
+            });
+        }
+
+        // publish status based on the query parameter
+        course.isPublished = publish === "true";
+        await course.save();
+
+        const statusMessage = course.isPublished ? "Published" : "Unpublished";
+
+        return res.status(200).json({
+            message: `Course is ${statusMessage}`
+        });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            message: "Failed to update status"
         });
     }
 }

@@ -6,6 +6,7 @@ import connectDB from "./database/db.js";
 import userRouter from "./routes/userRoute.js";
 import courseRouter from "./routes/courseRoute.js";
 import mediaRouter from "./routes/mediaRoute.js";
+import coursePurchaseRouter from "./routes/coursePurchaseRoute.js";
 
 dotenv.config( { quiet: true });
 
@@ -27,6 +28,7 @@ app.use(cors({
 app.use("/api/v1/media", mediaRouter)
 app.use("/api/v1/user",userRouter);
 app.use("/api/v1/course",courseRouter);
+app.use("/api/v1/purchase",coursePurchaseRouter);
 
 app.listen(PORT , () => {
     console.log(`Server is running on http://localhost:${PORT}`);
