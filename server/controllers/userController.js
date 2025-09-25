@@ -102,7 +102,7 @@ export const logout = async (req,res) => {
 export const getUserProfile = async (req,res) => {
     try {
         const userId = req.id;
-        const user = await userModel.findById(userId).select("-password ");
+        const user = await userModel.findById(userId).select("-password ").populate("enrolledCourses");
 
         if(!user){
             return res.status(404).json({

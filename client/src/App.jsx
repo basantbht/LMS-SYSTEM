@@ -18,6 +18,9 @@ import EditLecture from "./pages/admin/lecture/EditLecture";
 import CourseDetail from "./pages/student/CourseDetail";
 import CourseProgress from "./pages/student/CourseProgress";
 import SearchPage from "./pages/student/SearchPage";
+import { AdminRoute, AuthenticatedUser, ProtectedRoute } from "./components/ProtectedRoutes";
+import PurchasedCourseProtectedRoute from "./components/PurchaseCourseProtectedRoute";
+import { ThemeProvider } from "./components/ThemeProvider";
 
 const appRouter = createBrowserRouter([
   {
@@ -35,35 +38,39 @@ const appRouter = createBrowserRouter([
       },
       {
         path: "login",
-        element: <Login />,
+        element: <AuthenticatedUser><Login /></AuthenticatedUser> ,
       },
 
       { path: "my-learning", 
-        element: <MyLearning /> 
+        element: <ProtectedRoute><MyLearning /></ProtectedRoute> 
       },
 
       { path: "profile", 
-        element: <Profile /> 
+        element: <ProtectedRoute><Profile /></ProtectedRoute>  
       },
 
       { path: "course/search", 
-        element: <SearchPage /> 
+        element: <ProtectedRoute><SearchPage /> </ProtectedRoute>
       },
 
       {
         path: "course-detail/:courseId",
-        element: <CourseDetail />
+        element: <ProtectedRoute><CourseDetail /></ProtectedRoute>
       },
       
       {
         path: "course-progress/:courseId",
-        element: <CourseProgress />
+        element: <ProtectedRoute>
+          <PurchasedCourseProtectedRoute>
+            <CourseProgress />
+            </PurchasedCourseProtectedRoute>
+            </ProtectedRoute>
       },
 
       // admin routes start from here
       {
         path: "admin",
-        element: <Sidebar />,
+        element: <AdminRoute><Sidebar /></AdminRoute>,
         children:[
           {
             path:"dashboard",
@@ -98,7 +105,10 @@ const appRouter = createBrowserRouter([
 function App() {
   return (
     <main>
+      <ThemeProvider>
+
       <RouterProvider router={appRouter}></RouterProvider>
+      </ThemeProvider>
     </main>
   );
 }

@@ -7,7 +7,7 @@ const courseRouter = express.Router();
 
 courseRouter.post("/",isAuthenticated,createCourse);
 courseRouter.get("/search",isAuthenticated,searchCourse);
-courseRouter.get("/published-courses",isAuthenticated,getPublishedCourse);
+courseRouter.get("/published-courses",getPublishedCourse);
 courseRouter.get("/",isAuthenticated,getCreatorCourses);
 courseRouter.put("/:courseId",isAuthenticated,upload.single("courseThumbnail"),editCourse);
 courseRouter.get("/:courseId",isAuthenticated,getCourseById);
