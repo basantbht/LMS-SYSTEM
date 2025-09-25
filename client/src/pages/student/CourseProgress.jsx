@@ -110,7 +110,7 @@ const CourseProgress = () => {
               <Card
               onClick={() => handleSelectLecture(lecture)}
                 key={lecture._id}
-                className={`mb-3 hover:cursor-pointer transition transform ${lecture._id === currentLecture?._id ? 'bg-gray-200' : 'dark:bg-gray-800'}` }
+                className={`mb-3 hover:cursor-pointer transition transform ${lecture._id === currentLecture?._id ? 'bg-gray-200 dark:bg-gray-800' : ''}` }
               >
                 <CardContent className='flex items-center justify-between p-4'>
                   <div className='flex items-center'>
