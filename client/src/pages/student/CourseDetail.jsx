@@ -26,6 +26,8 @@ const CourseDetail = () => {
         }
     }
 
+    console.log(data)
+
     return (
         <div className='space-y-5'>
             <div className='bg-[#2D2F31] text-white'>
@@ -79,11 +81,11 @@ const CourseDetail = () => {
                     <Card>
                         <CardContent className='p-4 flex flex-col'>
                             <div className='w-full aspect-video mb-4'>
-                                <ReactPlayer
+                                <video
                                 width="100%"
                                 height="100%"
-                                url={course.lectures[0].videoUrl}
-                                controls={true}
+                                src={course.lectures[0].videoUrl}
+                                controls
                                 />
                                
                             </div>

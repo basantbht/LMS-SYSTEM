@@ -64,8 +64,6 @@ const CourseProgress = () => {
     await inCompleteCourse(courseId);
   }
 
-  
-
   return (
     <div className="max-w-7xl mx-auto p-4">
       {/* Display course name */}

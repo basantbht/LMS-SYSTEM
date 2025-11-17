@@ -36,7 +36,7 @@ export const createCourse = async (req, res) => {
 export const searchCourse = async (req, res) => {
     try {
         const { query = "", categories = [], sortByPrice = "" } = req.query;
-        
+
         // Create search query
         const searchCriteria = {
             isPublished: true,
@@ -267,10 +267,11 @@ export const editLecture = async (req, res) => {
 
         // Ensures the course still has the lecture if it was not already added.
         const course = await courseModel.findById(courseId);
-        if (course && course.lectures.includes(lecture._id)) {
+        if (course && !course.lectures.includes(lecture._id)) {
             course.lectures.push(lecture._id);
             await course.save();
         }
+
 
         return res.status(200).json({
             lecture,

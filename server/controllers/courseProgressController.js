@@ -5,6 +5,7 @@ export const getCourseProgress = async (req,res) => {
     try {
         const {courseId} = req.params;
         const userId = req.id;
+        console.log(courseId,userId)
 
         // Step 1 - Fetch the user course progress
         let courseProgress = await courseProgressModel.findOne({courseId,userId}).populate("courseId");
