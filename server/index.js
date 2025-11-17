@@ -1,5 +1,7 @@
 import express from "express"
 import dotenv from "dotenv";
+import serverless from "serverless-http";
+
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import connectDB from "./database/db.js";
@@ -32,6 +34,8 @@ app.use("/api/v1/course",courseRouter);
 app.use("/api/v1/purchase",coursePurchaseRouter);
 app.use("/api/v1/progress",courseProgressRouter);
 
-app.listen(PORT , () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-});
+app.get("/", (req,res) => {
+  res.send("API working")
+})
+
+export default serverless(app);
