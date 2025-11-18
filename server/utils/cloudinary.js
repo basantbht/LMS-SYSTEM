@@ -1,36 +1,80 @@
-import { v2 as cloudinary} from 'cloudinary';
+// import { v2 as cloudinary} from 'cloudinary';
+// import dotenv from "dotenv";
+// dotenv.config({});
+
+// cloudinary.config({
+//     api_key: process.env.API_KEY,
+//     api_secret: process.env.API_SECRET,
+//     cloud_name: process.env.CLOUD_NAME,
+// });
+
+// export const uploadMedia = async (file) => {
+//     try {
+//         const uploadResponse = await cloudinary.uploader.upload(file, {
+//             resource_type: "auto"
+//         });
+//         return uploadResponse;
+//     } catch (error) {
+//         console.log(error);
+//     }
+// }
+
+// export const deleteMediaFromCloudinary = async (publicId) => {
+//     try {
+//         await cloudinary.uploader.destroy(publicId);
+//     } catch (error) {
+//         console.log(error);
+//     }
+// }
+
+// export const deleteVideoFromCloudinary = async (publicId) => {
+//     try {
+//         await cloudinary.uploader.destroy(publicId,{resource_type:"video"});
+//     } catch (error) {
+//         console.log(error);
+//     }
+// }
+
+// server/utils/cloudinary.js
+import { v2 as cloudinary } from "cloudinary";
 import dotenv from "dotenv";
-dotenv.config({});
+
+dotenv.config();
 
 cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
     api_key: process.env.API_KEY,
     api_secret: process.env.API_SECRET,
-    cloud_name: process.env.CLOUD_NAME,
 });
 
-export const uploadMedia = async (file) => {
-    try {
-        const uploadResponse = await cloudinary.uploader.upload(file, {
-            resource_type: "auto"
-        });
-        return uploadResponse;
-    } catch (error) {
-        console.log(error);
-    }
-}
+// Upload a file buffer to Cloudinary
+export const uploadMedia = (fileBuffer) => {
+    return new Promise((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream(
+            { resource_type: "auto" },
+            (error, result) => {
+                if (error) reject(error);
+                else resolve(result);
+            }
+        );
+        stream.end(fileBuffer);
+    });
+};
 
+// Delete media by public ID
 export const deleteMediaFromCloudinary = async (publicId) => {
     try {
         await cloudinary.uploader.destroy(publicId);
     } catch (error) {
         console.log(error);
     }
-}
+};
 
+// Delete video specifically
 export const deleteVideoFromCloudinary = async (publicId) => {
     try {
-        await cloudinary.uploader.destroy(publicId,{resource_type:"video"});
+        await cloudinary.uploader.destroy(publicId, { resource_type: "video" });
     } catch (error) {
         console.log(error);
     }
-}
+};
