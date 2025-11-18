@@ -20,10 +20,24 @@ const PORT = process.env.PORT || 8001;
 // default middleware
 app.use(express.json());
 app.use(cookieParser());
+
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://lms-system-frontend-orcin.vercel.app"
+];
+
 app.use(cors({
-  origin: 'http://localhost:5173' || "https://lms-system-frontend-orcin.vercel.app",
-  credentials: true              
+  origin: function(origin, callback){
+    if(!origin) return callback(null, true); // allow non-browser requests like Postman
+    if(allowedOrigins.includes(origin)){
+      callback(null, true);
+    } else {
+      callback(new Error("CORS not allowed"));
+    }
+  },
+  credentials: true
 }));
+
 
 // apis
 app.use("/api/v1/media", mediaRouter)
