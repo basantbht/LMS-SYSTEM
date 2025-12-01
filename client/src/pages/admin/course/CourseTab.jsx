@@ -131,7 +131,7 @@ const CourseTab = () => {
         <div>
           <CardTitle>Basic Course Information</CardTitle>
           <CardDescription>
-            Make changes to your courses here. Click saave when you're done.
+            Make changes to your courses here. Click save when you're done.
           </CardDescription>
         </div>
         <div className="space-x-2">
@@ -176,7 +176,7 @@ const CourseTab = () => {
           <div className="flex items-center gap-5">
             <div>
               <Label>Category</Label>
-              <Select onValueChange={selectCategory}>
+              <Select value={input.category[0]} onValueChange={selectCategory}>
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="Select a category" />
                 </SelectTrigger>

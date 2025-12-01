@@ -122,8 +122,9 @@ export const editCourse = async (req, res) => {
     try {
         const courseId = req.params.courseId;
         const { courseTitle, subTitle, description, category, courseLevel, coursePrice } = req.body;
-        const thumbnail = req.file;
-        console.log(req.body, req.file, courseId)
+        const thumbnail = req.file.buffer;
+
+        console.log(thumbnail)
 
         let course = await courseModel.findById(courseId);
         if (!course) {
@@ -134,13 +135,17 @@ export const editCourse = async (req, res) => {
 
         let courseThumbnail;
         if (thumbnail) {
+
             if (course.courseThumbnail) {
                 const publicId = course.courseThumbnail.split("/").pop().split(".")[0];
                 await deleteMediaFromCloudinary(publicId); //delete old image
             }
             // upload a thumbnail on cloudinary
-            courseThumbnail = await uploadMedia(thumbnail.path);
+            courseThumbnail = await uploadMedia(thumbnail);
+            console.log(courseThumbnail)
         }
+
+        console.log("coursthumbanial",courseThumbnail?.secure_url)
 
         const updateData = { courseTitle, subTitle, description, category, courseLevel, coursePrice, courseThumbnail: courseThumbnail?.secure_url }
 
